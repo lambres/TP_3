@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "LinkedList.h"
 #include "Passenger.h"
+#include "parser.h"
 
 
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto).

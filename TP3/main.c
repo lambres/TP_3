@@ -89,16 +89,12 @@ int main()
 int getIDNuevo(int* nuevoId)
 {
 	FILE* pArchivo;
-
 	if ((pArchivo=fopen("id.csv","r"))==NULL)
 	{
-		pArchivo=fopen("id.csv","w+");
-		fscanf(pArchivo,"%d",nuevoId);
-		if(*nuevoId < 1000)
-		{
-			*nuevoId=1001;
-		}
+		pArchivo=fopen("id.csv","w");
 	}
+	fscanf(pArchivo,"%d",nuevoId);
+	printf("Nuevo ID: %d",*nuevoId);
 	//devuleve 0 si el archivo se cerro correctamente
 	return fclose(pArchivo);
 }
@@ -109,8 +105,8 @@ int putIDNuevo(int* nuevoId)
 	FILE* pArchivo;
 	if (!((pArchivo=fopen("id.csv","r"))==NULL))
 	{
-		pArchivo=fopen("id.csv","w+");
-		fwrite(nuevoId,sizeof(nuevoId),1,pArchivo);
+		pArchivo=fopen("id.csv","w");
+		fprintf(pArchivo,"%d",*nuevoId);
 	}
 	//devuleve 0 si el archivo se cerro correctamente
 	return fclose(pArchivo);

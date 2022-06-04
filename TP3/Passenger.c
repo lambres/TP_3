@@ -13,10 +13,10 @@ Passenger* Passenger_new()
 }
 
 Passenger* Passenger_newParametros(char* idStr,char* nombreStr ,char* apellidoStr, char* precioStr,
-		char* tipoPasajeroStr, char* codigoVueloStr)
+		char* codigoVueloStr, char* tipoPasajeroStr, char* estadoVueloStr)
 {
-	Passenger* aux = Passenger_new();
 	int auxTipoPasajero = -1;
+	Passenger* aux = Passenger_new();
 	if (aux != NULL)
 	{
 		aux->id=atoi(idStr);

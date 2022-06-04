@@ -17,15 +17,14 @@ typedef struct
 	char nombre[50];
 	char apellido[50];
 	float precio;
+	char codigoVuelo[20];
 	int tipoPasajero;
-	char codigoVuelo[7];
-	int isEmpty;
-
+	char estadoVuelo[20];
 }Passenger;
 
 Passenger* Passenger_new();
 Passenger* Passenger_newParametros(char* idStr,char* nombreStr ,char* apellidoStr, char* precioStr,
-		char* tipoPasajeroStr, char* codigoVueloStr);
+		char* codigoVueloStr, char* tipoPasajeroStr, char* estadoVueloStr);
 
 void Passenger_delete();
 

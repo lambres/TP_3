@@ -10,16 +10,6 @@
  * \return int
  *
  */
-/*
- * int id;
-	char nombre[50];
-	char apellido[50];
-	float precio;
-	int tipoPasajero;
-	char codigoVuelo[7];
-	int isEmpty;
- *
- */
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
 {
 	int retorno = 1;
@@ -27,21 +17,21 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
 	char auxNombre[50];
 	char auxApellido[50];
 	char auxPrecio[6];
+	char auxCodigoVuelo[20];
 	char auxTipoPasajero[15];
-	char auxCodigoVuelo[8];
-	char auxIsEmpty[11];
+	char auxEstadoVuelo[20];
 
 	int camposLeidos;
 
 	if (pFile != NULL && pArrayListPassenger != NULL)
 	{
-		fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxIsEmpty);
+		fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxEstadoVuelo);
 		do
 		{
-			camposLeidos = fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxIsEmpty);
+			camposLeidos = fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxEstadoVuelo);
 			if (camposLeidos==7)
 			{
-				Passenger* pasajero = Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxTipoPasajero, auxCodigoVuelo);
+				Passenger* pasajero = Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
 				if (pasajero!=NULL)
 				{
 					ll_add(pArrayListPassenger, pasajero);
