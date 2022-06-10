@@ -12,8 +12,6 @@
 
 
 
-static int esNumerica(char *cadena, int limite);
-static int esNumeroDecimal(char *cadena, int limite);
 static int getInt(int *pResultado);
 static int myGets(char *cadena, int longitud);
 static int getFloat(float *pResultado);
@@ -29,7 +27,7 @@ static int esMail(char *cadena, int longitud);
 /// @param cadena array pasado para analizar
 /// @param limite tamaño del array
 /// @return Devuelve 0 si lo encontró y -1 si no es un número valido
-static int esNumerica(char *cadena, int limite) {
+int esNumerica(char *cadena, int limite) {
 	int retorno = -1; //ERROR
 	int i;
 	if (cadena != NULL && limite > 0) {
@@ -51,24 +49,30 @@ static int esNumerica(char *cadena, int limite) {
 ///
 /// @param cadena array a ser analizado
 /// @param limite tamaño del array
-/// @return -1 si es incorrecto el valor ingresado y 0 si el numero es decimal
-static int esNumeroDecimal(char *cadena, int limite) {
-	int retorno = -1; //ERROR
-	int i;
+/// @return -1 si es verdadero el valor ingresado y 0 si ERROR
+int esFlotante(char *cadena) {
+	int retorno = 1; //ERROR
+	int i=0;
 	int puntoEncontrado = 0; //bandera para dejar ingresar solo un punto
-	if (cadena != NULL && limite > 0) {
-		retorno = 1; //VERDADERO
-		for (i = 0; i < limite && cadena[i] != '\0'; i++) {
-			if (puntoEncontrado == 0 && cadena[i] == '.') {
-				puntoEncontrado = 1;
+	if (cadena != NULL && strlen(cadena) > 0)
+	{
+		for(i = 0 ; cadena[i] != '\0' ; i++)
+		{
+			if (i == 0 && (cadena[i] == '-' || cadena[i] == '+'))
+			{
 				continue;
 			}
-			if (i == 0 && (cadena[i] == '-' || cadena[i] == '+')) {
-				continue;
-			}
-			if (cadena[i] > '9' || cadena[i] < '0') {
-				retorno = 0;
-				break;
+			if (cadena[i] < '0' || cadena[i] > '9')
+			{
+				if (cadena[i] == '.' && puntoEncontrado == 0)
+				{
+					puntoEncontrado++;
+				}
+				else
+				{
+					retorno = 0;
+					break;
+				}
 			}
 		}
 	}
@@ -139,7 +143,7 @@ static int getFloat(float *pResultado) {
 
 	if (pResultado != NULL) {
 		if (myGets(buffer, sizeof(buffer)) == 0
-				&& esNumeroDecimal(buffer, sizeof(buffer))) {
+				&& esFlotante(buffer)) {
 			*pResultado = atof(buffer);
 			retorno = 0;
 		}

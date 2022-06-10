@@ -49,5 +49,7 @@ int utn_getTexto(char *pResultado, int longitud, char *mensaje,char *mensajeErro
 int utn_getEmail(char *pResultado, int longitud, char *mensaje,char *mensajeError, int reintentos);
 long int time_Current(void);
 long int time_Add(double secondsAdd);
+int esNumerica(char *cadena, int limite);
+int esFlotante(char *cadena);
 
 #endif /* UTN_H_ */

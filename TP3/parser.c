@@ -13,22 +13,22 @@
 int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
 {
 	int retorno = 1;
-	char auxId[5];
-	char auxNombre[50];
-	char auxApellido[50];
-	char auxPrecio[6];
-	char auxCodigoVuelo[20];
-	char auxTipoPasajero[15];
-	char auxEstadoVuelo[20];
+	char auxId[LEN_CHARID];
+	char auxNombre[LEN_NOMBRE];
+	char auxApellido[LEN_APELLIDO];
+	char auxPrecio[LEN_CHARPRICE];
+	char auxCodigoVuelo[LEN_CODVUELO];
+	char auxTipoPasajero[LEN_TIPOPASAJERO];
+	char auxEstadoVuelo[LEN_ESTADOVUELO];
 
 	int camposLeidos;
 
 	if (pFile != NULL && pArrayListPassenger != NULL)
 	{
-		fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxEstadoVuelo);
+		fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r\n]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxEstadoVuelo);
 		do
 		{
-			camposLeidos = fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxEstadoVuelo);
+			camposLeidos = fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\r\n]\n",auxId,auxNombre,auxApellido,auxPrecio,auxCodigoVuelo,auxTipoPasajero,auxEstadoVuelo);
 			if (camposLeidos==7)
 			{
 				Passenger* pasajero = Passenger_newParametros(auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
@@ -52,6 +52,37 @@ int parser_PassengerFromText(FILE* pFile , LinkedList* pArrayListPassenger)
  */
 int parser_PassengerFromBinary(FILE* pFile , LinkedList* pArrayListPassenger)
 {
+	int retorno = 1;
+	Passenger* this;
+	int cant;
+	if (pFile != NULL && pArrayListPassenger != NULL)
+	{
+		while(!feof(pFile))
+		{
+			cant=fread(&this, sizeof(this), 1,pFile);
+			if(cant!=1)
+			{
+				if(feof(pFile))
+				{
+					break;
+				}
+				else
+				{
+					printf("Error en la lectura del registro\n");
+				}
+			}
+			else
+			{
+				printf("ID%d|Apellido%s|CodVuelo%s\n",this->id,this->apellido,this->codigoVuelo);
+				ll_add(pArrayListPassenger, this);
+			}
+		}
+		retorno=0;
+	}
 
-    return 1;
+    return retorno;
 }
+
+
+
+
